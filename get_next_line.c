@@ -6,7 +6,7 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:29:32 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/11 13:12:25 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:36:24 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ char	*ft_line(char *stash)
 	i = 0;
 	if (!stash)
 		return (NULL);
-	while (stash[i])
-		++i;
+	while (stash[i] != '\0' && stash[i] != '\n')
+			++i;
 	line = malloc (sizeof(char) * i + 2);
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (stash[i])
+	while (stash[i] != '\0' && stash[i] != '\n')
 	{
 		line[i] = stash[i];
 		++i;
 	}
 	if (stash[i] == '\n')
-		line[i] = '\n';
-	line[++i] = '\0';
+		line[i++] = '\n';
+	line[i] = '\0';
 	return (line);
 }
 //recorrer stash hasta un salto de linea o el final del str y almacenar el contador (i). Crear un malloc con ese largo +2 (salto de linea + nulo) (+ proteccion)
@@ -48,14 +48,20 @@ char	*ft_new_stash(char *stash)
 	char	*n_stash;
 
 	i = 0;
-	while (stash[i] != '\n' || stash[i] != '\0')
-		++i;
+//	printf("%p\n", stash);
+//	printf("%c\n", stash[i]);
+	while (stash[i] != '\0' && stash[i] != '\n')
+	{
+//		printf("%c", stash[i]);
+		i++;
+	}
 	if (!stash[i])
 	{
 		free(stash);
 		return (NULL);
 	}
 	n_stash = malloc (sizeof(char) * (ft_strlen(stash) - i + 1));
+//	printf("%p\n", n_stash);	
 	if (!n_stash)
 		return (NULL);
 	j = 0;
@@ -122,7 +128,7 @@ int main(void)
     char    *aux;
     x = 0;
     fd = open("prueba.txt", O_RDWR);
-    while (x < 2)
+    while (x < 20)
     {
         printf("%s", aux = get_next_line (fd));
         free(aux);

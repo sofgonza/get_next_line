@@ -6,10 +6,11 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:29:43 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/10 19:47:06 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/11 13:14:22 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
 
 int	ft_strlen(const char *s)
 {
@@ -21,38 +22,32 @@ int	ft_strlen(const char *s)
 	return (n);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *stash, char *buff)
 {
-	int		lens1;
-	int		lens2;
+	int		i;
+	int		j;
 	char	*str;
 
-	if (!s1)
+	if (!stash)
 	{
-		malloc (sizeof (char*)
+		stash = malloc (sizeof(char) * 1);
+		stash[0] = '\0';
 	}
-	if (!s1 || !s2)
+	if (!stash || !buff)
 		return (NULL);
-	lens1 = ft_strlen(s1);
-	lens2 = ft_strlen(s2);
-	str = (char *) malloc (sizeof(char) * (lens1 + lens2 + 1));
-	if (str != NULL)
-	{
-		ft_strlcpy(str, (char *)s1, (lens1 + 1));
-		ft_strlcat(str, (char *)s2, (lens1 + lens2 + 1));
-		free (s1);
-		return (str);
-	}
-	return (NULL);
+	str = malloc (sizeof(char) * (ft_strlen(stash) + ft_strlen(buff) + 1));
+	if (!str)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (stash[++i])
+		str[i] = stash[i];
+	while (buff[j])
+		str[i++] = buff[j++];
+	str[i] = '\0';
+	free (stash);
+	return (str);
 }
-//simplificar strjoin//
-//agregar caso q el s1 este vacio y crear el malloc//
-//crear malloc con el len de ambos str//
-//simil strcat, ir almacenando en el contenido de s1 hasta terminar y luego comenzar a recorrer s2 y almacenar//
-//agregar nulo al final//
-//liberar malloc de stash (s1)//
-//retornar str//
-//hasta aca hay q corregir//
 
 char	*ft_strchr(const char *s, int c)
 {

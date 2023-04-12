@@ -6,7 +6,7 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:29:32 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/11 15:36:24 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/12 02:30:39 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_line(char *stash)
 	char	*line;
 
 	i = 0;
-	if (!stash)
+	if (!stash || stash[0] == '\0')
 		return (NULL);
 	while (stash[i] != '\0' && stash[i] != '\n')
 			++i;
@@ -36,10 +36,6 @@ char	*ft_line(char *stash)
 	line[i] = '\0';
 	return (line);
 }
-//recorrer stash hasta un salto de linea o el final del str y almacenar el contador (i). Crear un malloc con ese largo +2 (salto de linea + nulo) (+ proteccion)
-//ir almacenando en el nuevo str la linea. Agregar salto de line si es que se encuentra con uno.
-//cerrar con el nulo
-//retornar el str
 
 char	*ft_new_stash(char *stash)
 {
@@ -48,11 +44,8 @@ char	*ft_new_stash(char *stash)
 	char	*n_stash;
 
 	i = 0;
-//	printf("%p\n", stash);
-//	printf("%c\n", stash[i]);
 	while (stash[i] != '\0' && stash[i] != '\n')
 	{
-//		printf("%c", stash[i]);
 		i++;
 	}
 	if (!stash[i])
@@ -61,7 +54,6 @@ char	*ft_new_stash(char *stash)
 		return (NULL);
 	}
 	n_stash = malloc (sizeof(char) * (ft_strlen(stash) - i + 1));
-//	printf("%p\n", n_stash);	
 	if (!n_stash)
 		return (NULL);
 	j = 0;
@@ -69,15 +61,9 @@ char	*ft_new_stash(char *stash)
 	while (stash[i])
 		n_stash[j++] = stash[i++];
 	n_stash[j] = '\0';
-	free (stash);
+	free(stash);
 	return (n_stash);
 }
-//recorrer hasta salto de linea o fin del stash y almacenar contador
-//si llego al final del stash (!stash[i]) liberar el stash y retornar nullo.
-//almacenar espacio en el str del largo del stash - i (- la linea) + 1 (agregar nulo)
-//ir almacenando desde el contador ++i del shash (incrementar antes porque quedo en el \n) con un nuevo contador en el nuevo str
-//liberar stash
-//retornar str
 
 char	*ft_read(int fd, char *stash)
 {
@@ -102,9 +88,6 @@ char	*ft_read(int fd, char *stash)
 	free (buff);
 	return (stash);
 }
-//mientras no encuentra \n en el stash y bytes != 0: guardar en bytes los bytes leidos (retorno del read). Si no se ejecuta la funcion read correctamente (bytes == -1) hay que liberar el buffer y retornar null.
-//Agregar el caracter nullo al final de buff (buff[bytes] = '\0') y almacenar en el stash la union del buff con el stash ya existente (strjoin)
-//liberar buff!! y retornar el nuevo stash.
 
 char	*get_next_line(int fd)
 {
@@ -120,19 +103,44 @@ char	*get_next_line(int fd)
 	stash = ft_new_stash(stash);
 	return (line);
 }
+/*
+void	ft_leaks()
+{
+	system("leaks a.out");
+}
 
 int main(void)
 {
     char    fd;
-    int     x;
-    char    *aux;
-    x = 0;
+    char    *line;
+
     fd = open("prueba.txt", O_RDWR);
-    while (x < 20)
+	if (fd == -1)
+		return (0);
+	line = "";
+//	line = get_next_line(fd);
+//	printf("%s", line);
+    while (line)
     {
-        printf("%s", aux = get_next_line (fd));
-        free(aux);
-        x++;
+		line = get_next_line(fd);
+		printf("%s", line);
+        free(line);
     }
     close(fd);
+	return (0);
+}
+*/
+int main()
+{
+    char    *line;
+    int     fd;
+    fd = open("el_quijote.txt", O_RDONLY);
+    while (0 == 0)
+    {
+        line = get_next_line(fd);
+        if (!line)
+            break ;
+        printf("%s", line);
+    }
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:29:43 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/11 15:19:36 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/12 16:34:25 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,18 @@ char	*ft_strjoin(char *stash, char *buff)
 	return (str);
 }
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, int c)
 {
 	int	i;
 
 	i = 0;
 	if (!s)
-		return (NULL);
+		return (0);
 	while (s[i])
 	{
 		if (s[i] == (char)c)
-			return ((char *)&s[i]);
+			return (1);
 		++i;
 	}
-	if ((char)c == '\0')
-		return ((char *)&s[i]);
-	return (NULL);
+	return (0);
 }

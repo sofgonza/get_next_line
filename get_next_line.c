@@ -6,7 +6,7 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:29:32 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/12 02:30:39 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/12 16:37:30 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ char	*ft_new_stash(char *stash)
 
 	i = 0;
 	while (stash[i] != '\0' && stash[i] != '\n')
-	{
 		i++;
-	}
 	if (!stash[i])
 	{
 		free(stash);
@@ -74,7 +72,7 @@ char	*ft_read(int fd, char *stash)
 	if (!buff)
 		return (NULL);
 	bytes = 1;
-	while (ft_strchr(stash, '\n') == NULL && bytes != 0)
+	while (!(ft_strchr(stash, '\n')) && bytes != 0)
 	{
 		bytes = read(fd, buff, BUFFER_SIZE);
 		if (bytes == -1)
@@ -94,8 +92,12 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(stash);
+		stash = NULL;
 		return (NULL);
+	}
 	stash = ft_read(fd, stash);
 	if (!stash)
 		return (NULL);
@@ -128,19 +130,31 @@ int main(void)
     }
     close(fd);
 	return (0);
-}
-*/
+}*/
 int main()
 {
     char    *line;
     int     fd;
-    fd = open("el_quijote.txt", O_RDONLY);
-    while (0 == 0)
+
+    fd = open("read_error.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		close(fd);
+		return (0);
+	}
+	line = "";
+    while (line != NULL)
     {
         line = get_next_line(fd);
-        if (!line)
-            break ;
+		if (!line)
+		{
+			free (line);
+			break;
+		}
         printf("%s", line);
     }
+	free(line);
+	close(fd);
+	system("leaks a.out");
     return (0);
 }

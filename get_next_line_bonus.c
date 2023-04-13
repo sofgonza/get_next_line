@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/10 15:29:32 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/12 16:48:37 by sofgonza         ###   ########.fr       */
+/*   Created: 2023/04/13 15:00:08 by sofgonza          #+#    #+#             */
+/*   Updated: 2023/04/13 15:44:07 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,48 +89,23 @@ char	*ft_read(int fd, char *stash)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[4096];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(stash);
-		stash = NULL;
+		free(stash[fd]);
+		stash[fd] = NULL;
 		return (NULL);
 	}
-	stash = ft_read(fd, stash);
-	if (!stash)
+	stash[fd] = ft_read(fd, stash[fd]);
+	if (!stash[fd])
 		return (NULL);
-	line = ft_line(stash);
-	stash = ft_new_stash(stash);
+	line = ft_line(stash[fd]);
+	stash[fd] = ft_new_stash(stash[fd]);
 	return (line);
 }
 /*
-void	ft_leaks()
-{
-	system("leaks a.out");
-}
-
-int main(void)
-{
-    char    fd;
-    char    *line;
-
-    fd = open("prueba.txt", O_RDWR);
-	if (fd == -1)
-		return (0);
-	line = "";
-//	line = get_next_line(fd);
-//	printf("%s", line);
-    while (line)
-    {
-		line = get_next_line(fd);
-		printf("%s", line);
-        free(line);
-    }
-    close(fd);
-	return (0);
-}
 int main()
 {
     char    *line;
@@ -157,4 +132,5 @@ int main()
 	close(fd);
 	system("leaks a.out");
     return (0);
-}*/
+}
+*/

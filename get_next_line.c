@@ -6,7 +6,7 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:29:32 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/12 16:48:37 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/14 16:32:00 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,38 +105,14 @@ char	*get_next_line(int fd)
 	stash = ft_new_stash(stash);
 	return (line);
 }
-/*
-void	ft_leaks()
-{
-	system("leaks a.out");
-}
 
-int main(void)
-{
-    char    fd;
-    char    *line;
-
-    fd = open("prueba.txt", O_RDWR);
-	if (fd == -1)
-		return (0);
-	line = "";
-//	line = get_next_line(fd);
-//	printf("%s", line);
-    while (line)
-    {
-		line = get_next_line(fd);
-		printf("%s", line);
-        free(line);
-    }
-    close(fd);
-	return (0);
-}
+#include <stdio.h>
 int main()
 {
     char    *line;
     int     fd;
 
-    fd = open("read_error.txt", O_RDONLY);
+    fd = open("prueba.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		close(fd);
@@ -152,9 +128,35 @@ int main()
 			break;
 		}
         printf("%s", line);
+		free(line);
     }
+	printf("%s", line);
 	free(line);
 	close(fd);
-	system("leaks a.out");
+	system("leaks -q a.out");
     return (0);
+}
+/*
+#include <stdio.h>
+#include <time.h>
+int	main(void)
+{
+ 	int fd;
+
+ 	fd = open("el_quijote.txt", O_RDONLY);
+ 	char *s;
+	clock_t start = clock();
+ 	while ((s = get_next_line(fd)))
+ 	{
+		//printf("===================================\n");
+		//printf("RETURN ----> %s", s);
+		//printf("===================================\n");
+ 		free(s);
+ 	}
+	//printf("RETURN ----> %s", s);
+	//printf("===================================\n");
+	float seconds = (float)(clock() - start) / CLOCKS_PER_SEC;
+	printf ("%.2f ds\n", seconds);
+	// system("leaks a.out");
+ 	return (0);
 }*/

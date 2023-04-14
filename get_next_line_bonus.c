@@ -6,7 +6,7 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 15:00:08 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/13 15:44:07 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:55:49 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,29 +108,40 @@ char	*get_next_line(int fd)
 /*
 int main()
 {
-    char    *line;
-    int     fd;
+    char    *line1;
+	char	*line2;
+    int     fd1;
+	int		fd2;
 
-    fd = open("read_error.txt", O_RDONLY);
-	if (fd == -1)
+    fd1 = open("read_error.txt", O_RDONLY);
+    fd2 = open("prueba.txt", O_RDONLY);
+	if (fd1 == -1 || fd2 == -1)
 	{
-		close(fd);
+		close(fd1);
+		close(fd2);
 		return (0);
 	}
-	line = "";
-    while (line != NULL)
+	line1 = "";
+	line2 = "";
+    while (line1 != NULL || line2 != NULL)
     {
-        line = get_next_line(fd);
-		if (!line)
+        line1 = get_next_line(fd1);
+		line2 = get_next_line(fd2);
+		if (!line1 || !line2)
 		{
-			free (line);
+			free (line1);
+			free (line2);
 			break;
 		}
-        printf("%s", line);
+        printf("%s", line1);
+        printf("%s", line2);
+		free(line1);
+		free(line2);
     }
-	free(line);
-	close(fd);
-	system("leaks a.out");
+	free(line1);
+	free(line2);
+	close(fd1);
+	close(fd2);
+	//system("leaks a.out");
     return (0);
-}
-*/
+}*/

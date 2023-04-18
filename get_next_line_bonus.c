@@ -6,7 +6,7 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 15:00:08 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/14 15:55:49 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/14 17:04:36 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 /*
+#include <stdio.h>
 int main()
 {
     char    *line1;

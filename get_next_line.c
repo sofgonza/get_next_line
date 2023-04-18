@@ -6,7 +6,7 @@
 /*   By: sofgonza <sofgonza@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 15:29:32 by sofgonza          #+#    #+#             */
-/*   Updated: 2023/04/14 16:32:00 by sofgonza         ###   ########.fr       */
+/*   Updated: 2023/04/18 21:49:40 by sofgonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_line(char *stash)
 		return (NULL);
 	while (stash[i] != '\0' && stash[i] != '\n')
 			++i;
-	line = malloc (sizeof(char) * i + 2);
+	line = malloc (sizeof(char) * (i + 2));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -105,14 +105,15 @@ char	*get_next_line(int fd)
 	stash = ft_new_stash(stash);
 	return (line);
 }
-
+/*
 #include <stdio.h>
 int main()
 {
     char    *line;
     int     fd;
 
-    fd = open("prueba.txt", O_RDONLY);
+	//fd = 0;
+    fd = open("el_quijote.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		close(fd);
@@ -133,9 +134,9 @@ int main()
 	printf("%s", line);
 	free(line);
 	close(fd);
-	system("leaks -q a.out");
+	//system("leaks -q a.out");
     return (0);
-}
+}*/
 /*
 #include <stdio.h>
 #include <time.h>
